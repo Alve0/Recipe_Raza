@@ -1,10 +1,11 @@
 import React from "react";
+import { Outlet } from "react-router";
 
 function Home() {
   return (
-    <>
-      <h3>From App </h3>
-    </>
+    <div className=" bg-[#f5ebe0] ">
+      <Outlet />
+    </div>
   );
 }
 

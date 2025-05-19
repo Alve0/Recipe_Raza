@@ -9,10 +9,12 @@ const router = createBrowserRouter([
     path: "/",
     ErrorBoundary: Error,
     Component: Home,
-  },
-  {
-    path: "/add-recipe",
-    Component: AddRecipe,
+    children: [
+      {
+        path: "/add-recipe",
+        Component: AddRecipe,
+      },
+    ],
   },
 ]);
 
