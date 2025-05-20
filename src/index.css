@@ -11,3 +11,8 @@ bg = f5ebe0 */
   font-family: "Poppins";
   color: #4e4640;
 }
+
+.active {
+  background-color: #302b27;
+  color: white;
+}
