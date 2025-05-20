@@ -13,28 +13,35 @@ const AddRecipe = () => {
       instructions: formData.get("instructions"),
       cuisineType: formData.get("cuisineType"),
       prepTime: formData.get("prepTime"),
+      categories: formData.getAll("categories"),
     };
-
-    console.log("Recipe Data:", recipeData);
-
+    const url = "http://localhost:3000/add-recipe";
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(recipeData),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
     form.reset();
   };
 
   return (
-    <div className="bg-[#f5ebe0] h-screen items-center flex justify-center px-4">
-      <div className="max-w-[1080px]  mx-auto ">
+    <div className="bg-[#f5ebe0] h-screen flex items-center justify-center p-4">
+      <div className="max-w-[1080px]  mx-auto w-full ">
         <h3 className="text-5xl text-center font-bold my-5">Add Recipe</h3>
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <div>
-            <label className="block text-sm font-medium ">Title</label>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-sm font-medium">Title</label>
             <input
               type="text"
               name="title"
               required
-              className="mt-1 block  w-full p-2 border border-[#4e4640] rounded bg-[#d6c9b96e]"
+              className="mt-1 block w-full p-2 border border-[#4e4640] rounded bg-[#d6c9b96e]"
             />
           </div>
-          <div>
+
+          <div className="mb-4">
             <label className="block text-sm font-medium text-[#4e4640]">
               Ingredients
             </label>
@@ -46,8 +53,8 @@ const AddRecipe = () => {
             ></textarea>
           </div>
 
-          <div>
-            <label className="block  text-sm font-medium text-[#4e4640]">
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-[#4e4640]">
               Image URL
             </label>
             <input
@@ -57,7 +64,8 @@ const AddRecipe = () => {
               className="mt-1 block w-full p-2 border border-[#4e4640] rounded bg-[#d6c9b96e]"
             />
           </div>
-          <div>
+
+          <div className="mb-4">
             <label className="block text-sm font-medium text-[#4e4640]">
               Instructions
             </label>
@@ -68,27 +76,29 @@ const AddRecipe = () => {
               rows="4"
             ></textarea>
           </div>
-          <div className="flex gap-4 justify-between items-center">
+
+          <div className="flex gap-4 items-start mb-4 justify-between">
             <div className="w-full">
-              <label className="block text-sm font-medium text-[#4e4640]">
-                Preparation Time (minutes)
-              </label>
+              <h3 className="block text-sm font-medium text-[#4e4640] mb-1">
+                Preparation Time
+              </h3>
               <input
                 type="number"
+                placeholder="minute"
                 name="prepTime"
                 required
                 min="1"
-                className="mt-1 block w-full p-2 border border-[#4e4640] rounded bg-[#d6c9b96e]"
+                className="block w-full p-2 border border-[#4e4640] rounded bg-[#d6c9b96e]"
               />
             </div>
 
             <div className="w-full">
-              <label className="block text-sm font-medium text-[#4e4640]">
+              <h3 className="block text-sm font-medium text-[#4e4640] mb-1">
                 Cuisine Type
-              </label>
+              </h3>
               <select
                 name="cuisineType"
-                className="mt-1 block w-full p-2 border border-[#4e4640] rounded bg-[#d6c9b96e] "
+                className="block w-full p-2 border border-[#4e4640] rounded bg-[#d6c9b96e]"
               >
                 <option value="Italian">Italian</option>
                 <option value="Mexican">Mexican</option>
@@ -99,7 +109,28 @@ const AddRecipe = () => {
             </div>
           </div>
 
-          <div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-[#4e4640] mb-2">
+              Categories
+            </label>
+            <div className="flex flex-wrap gap-3">
+              {["Breakfast", "Lunch", "Dinner", "Dessert", "Vegan"].map(
+                (cat) => (
+                  <label key={cat} className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      name="categories"
+                      value={cat}
+                      className="accent-[#4e4640]"
+                    />
+                    <span className="text-[#4e4640]">{cat}</span>
+                  </label>
+                )
+              )}
+            </div>
+          </div>
+
+          <div className="mb-4">
             <button type="submit" className="w-full bg-[#e3d5ca] btn">
               Add Recipe
             </button>
