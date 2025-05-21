@@ -1,16 +1,22 @@
 import React, { use } from "react";
 import { FaGoogle } from "react-icons/fa6";
-import { NavLink } from "react-router";
+import { Navigate, NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 const Login = () => {
   const { login, setUser, user } = use(AuthContext);
-  const handleLoginSubmit = (event) => {
+  const navigate = useNavigate();
+  const handleLoginSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    login(email, password).then(setUser(user));
+    try {
+      await login(email, password);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
     console.log(email, password);
     form.reset();
   };

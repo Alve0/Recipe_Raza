@@ -5,6 +5,7 @@ import Home from "../Pages/Home";
 import AddRecipe from "../Pages/AddRecipe";
 import Login from "../Components/login_reginster/Login";
 import Register from "../Components/login_reginster/Register";
+import PrivateRoute from "../Provider/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/add-recipe",
-        Component: AddRecipe,
+        element: (
+          <PrivateRoute>
+            <AddRecipe />
+          </PrivateRoute>
+        ),
       },
 
       {
