@@ -6,6 +6,7 @@ import AddRecipe from "../Pages/AddRecipe";
 import Login from "../Components/login_reginster/Login";
 import Register from "../Components/login_reginster/Register";
 import PrivateRoute from "../Provider/PrivateRoute";
+import MyRecipes from "../Pages/MyRecipes";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,14 @@ const router = createBrowserRouter([
       {
         path: "/register",
         Component: Register,
+      },
+      {
+        path: "/my-recipe/:id",
+        element: (
+          <PrivateRoute>
+            <MyRecipes />
+          </PrivateRoute>
+        ),
       },
     ],
   },

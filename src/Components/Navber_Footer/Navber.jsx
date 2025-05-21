@@ -62,7 +62,7 @@ function Navber() {
               <NavLink to={"/add-recipe"}>Add recipe</NavLink>
             </li>
             <li>
-              <NavLink to={"/my-recipe"}>My Recipe</NavLink>
+              <NavLink to={`/my-recipe/${user?.uid}`}>My Recipe</NavLink>
             </li>
           </ul>
         </div>

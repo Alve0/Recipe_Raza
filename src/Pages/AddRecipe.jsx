@@ -1,6 +1,8 @@
-import React from "react";
+import React, { use } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const AddRecipe = () => {
+  const { user } = use(AuthContext);
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -14,6 +16,7 @@ const AddRecipe = () => {
       cuisineType: formData.get("cuisineType"),
       prepTime: formData.get("prepTime"),
       categories: formData.getAll("categories"),
+      uid: user.uid,
     };
     const url = "http://localhost:3000/add-recipe";
     fetch(url, {

@@ -4,7 +4,7 @@ import { Navigate, NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 const Login = () => {
-  const { login, setUser, user } = use(AuthContext);
+  const { login, googleLogin, user } = use(AuthContext);
   const navigate = useNavigate();
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
@@ -13,14 +13,13 @@ const Login = () => {
     const password = form.password.value;
     try {
       await login(email, password);
-      navigate("/");
     } catch (error) {
       console.log(error);
     }
-    console.log(email, password);
     form.reset();
   };
 
+  user != null ? navigate("/") : "";
   return (
     <div className="bg-[#f5ebe0] min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md mx-auto bg-[#d6c9b96e] p-6 rounded-lg shadow-md">
@@ -68,7 +67,7 @@ const Login = () => {
             <span className="mx-4 text-[#4e4640]">or</span>
             <div className="flex-grow h-px bg-[#4e4640]"></div>
           </div>
-          <div className="mb-4">
+          <div className="mb-4" onClick={() => googleLogin()}>
             <button className="w-full flex items-center gap-3 justify-center bg-[#e3d5ca] p-2 rounded font-medium text-[#4e4640] hover:bg-[#d6c9b9]">
               <FaGoogle />
               Sign in with Google
