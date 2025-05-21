@@ -1,7 +1,9 @@
-import React from "react";
+import React, { use, useState } from "react";
 import { ImSpoonKnife } from "react-icons/im";
 import { NavLink } from "react-router";
+import { AuthContext } from "../../Provider/AuthProvider";
 function Navber() {
+  const { user, signout } = use(AuthContext);
   return (
     <div className="bg-[#a78c6c69] px-5">
       <div className="navbar  bg-transparent shadow-sm">
@@ -64,9 +66,51 @@ function Navber() {
             </li>
           </ul>
         </div>
-        <div className="navbar-end">
-          <a className="btn">Button</a>
-        </div>
+        {user ? (
+          <div className="dropdown dropdown-end navbar-end ">
+            <div
+              tabIndex={0}
+              role="button"
+              className=" cursor-grab hover:bg-transparent bg-transparent border-none avatar"
+            >
+              <div className="w-10  rounded-full">
+                <img
+                  alt="Tailwind CSS Navbar component"
+                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                />
+              </div>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content  bg-transparent mt-36 rounded-box z-1  w-52 p-2 shadow"
+            >
+              <li>
+                <a className="justify-between">Profile</a>
+              </li>
+              <li>
+                <a>Settings</a>
+              </li>
+              <li>
+                <a onClick={() => signout()}>Logout</a>
+              </li>
+            </ul>
+          </div>
+        ) : (
+          <div className="flex navbar-end gap-3">
+            <NavLink
+              to={"/login"}
+              className="btn bg-transparent border-[#7a6852]"
+            >
+              Login
+            </NavLink>
+            <NavLink
+              to={"/register"}
+              className="btn bg-transparent border-2 border-[#7a6852]"
+            >
+              Register
+            </NavLink>
+          </div>
+        )}
       </div>
     </div>
   );

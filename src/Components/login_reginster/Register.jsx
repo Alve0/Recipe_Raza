@@ -1,22 +1,25 @@
-import React from "react";
+import React, { use } from "react";
 import { FaGoogle } from "react-icons/fa6";
 import Navber from "../Navber_Footer/Navber";
-import { NavLink } from "react-router";
+import { Navigate, NavLink } from "react-router";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Register = () => {
-  const handleRegisterSubmit = (event) => {
+  const { createUser, profileUpdate } = use(AuthContext);
+
+  const handleRegisterSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
-    const formData = new FormData(form);
-
-    const registerData = {
-      name: formData.get("name"),
-      photoURL: formData.get("photoURL"),
-      email: formData.get("email"),
-      password: formData.get("password"),
-    };
-
-    console.log(registerData);
+    const name = form.name.value;
+    const photo = form.photoURL.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    try {
+      await createUser(email, password);
+      await profileUpdate(name, photo);
+    } catch (err) {
+      console.log(err);
+    }
     form.reset();
   };
 
