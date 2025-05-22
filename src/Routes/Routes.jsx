@@ -8,6 +8,7 @@ import Register from "../Components/login_reginster/Register";
 import PrivateRoute from "../Provider/PrivateRoute";
 import MyRecipes from "../Pages/MyRecipes";
 import RecipeDetails from "../Pages/RecipeDetails";
+import Update from "../Pages/Update";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
             <RecipeDetails />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/update/:id",
+        Component: Update,
       },
     ],
   },

@@ -2,6 +2,7 @@ import React, { use, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import RecipeDetails from "./RecipeDetails";
 import { AuthContext } from "../Provider/AuthProvider";
+import Update from "./Update";
 
 function MyRecipes() {
   const { user } = use(AuthContext);
@@ -165,7 +166,7 @@ function MyRecipes() {
               </div>
               <div className="flex gap-2 mt-auto">
                 <button
-                  onClick={() => handleUpdateClick(recipe)}
+                  onClick={() => navigate(`/update/${recipe._id}`)}
                   className="flex-1 btn bg-[#e3d5ca] py-1.5 rounded font-medium border-[#4e4640] border-2 text-[#4e4640] text-sm hover:bg-[#d6c9b9]"
                 >
                   Update
