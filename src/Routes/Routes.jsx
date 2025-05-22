@@ -7,6 +7,7 @@ import Login from "../Components/login_reginster/Login";
 import Register from "../Components/login_reginster/Register";
 import PrivateRoute from "../Provider/PrivateRoute";
 import MyRecipes from "../Pages/MyRecipes";
+import RecipeDetails from "../Pages/RecipeDetails";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyRecipes />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/recipe-details/:id",
+        element: (
+          <PrivateRoute>
+            <RecipeDetails />
           </PrivateRoute>
         ),
       },

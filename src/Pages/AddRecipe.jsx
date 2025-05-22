@@ -16,6 +16,7 @@ const AddRecipe = () => {
       cuisineType: formData.get("cuisineType"),
       prepTime: formData.get("prepTime"),
       categories: formData.getAll("categories"),
+      likeCount: 0,
       uid: user.uid,
     };
     const url = "http://localhost:3000/add-recipe";

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import RecipeDetails from "./RecipeDetails";
 
 function MyRecipes() {
   const { id } = useParams();
   const [recipes, setRecipes] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -51,9 +53,11 @@ function MyRecipes() {
   if (!recipes.length) {
     return <p>No recipes found</p>;
   }
-
+  function HendelClicked(id) {
+    navigate(`/recipe-details/${id}`);
+  }
   return (
-    <div className="bg-[#f5ebe0] min-h-screen p-4">
+    <div className="bg-[#f5ebe0]  min-h-screen p-4">
       <h2 className="text-3xl font-bold text-[#4e4640] mb-6 text-center">
         My Recipes
       </h2>
@@ -68,65 +72,66 @@ function MyRecipes() {
               key={recipe._id}
               className="bg-[#d6c9b96e] p-4 rounded-lg shadow-md flex flex-col"
             >
-              {recipe.imageUrl && (
-                <img
-                  src={recipe.imageUrl}
-                  alt={recipe.title}
-                  className="w-full h-40 object-cover rounded-lg mb-3"
-                />
-              )}
+              <div onClick={() => HendelClicked(recipe._id)}>
+                {recipe.imageUrl && (
+                  <img
+                    src={recipe.imageUrl}
+                    alt={recipe.title}
+                    className="w-full h-40 object-cover rounded-lg mb-3"
+                  />
+                )}
 
-              <h3 className="text-lg font-bold text-[#4e4640] mb-2 line-clamp-2">
-                {recipe.title}
-              </h3>
+                <h3 className="text-lg font-bold text-[#4e4640] mb-2 line-clamp-2">
+                  {recipe.title}
+                </h3>
 
-              <div className="flex justify-between text-[#4e4640] text-sm mb-2">
-                <p>
-                  <span className="font-medium">Cuisine:</span>{" "}
-                  {recipe.cuisineType || "N/A"}
-                </p>
-                <p>
-                  <span className="font-medium">Time:</span>{" "}
-                  {recipe.prepTime ? `${recipe.prepTime} min` : "N/A"}
-                </p>
-              </div>
-
-              {recipe.categories && Array.isArray(recipe.categories) && (
-                <div className="flex flex-wrap gap-1 mb-2">
-                  {recipe.categories.map((category, index) => (
-                    <span
-                      key={index}
-                      className="bg-[#e3d5ca] text-[#4e4640] px-2 py-0.5 rounded-full text-xs"
-                    >
-                      {category}
-                    </span>
-                  ))}
+                <div className="flex justify-between text-[#4e4640] text-sm mb-2">
+                  <p>
+                    <span className="font-medium">Cuisine:</span>{" "}
+                    {recipe.cuisineType || "N/A"}
+                  </p>
+                  <p>
+                    <span className="font-medium">Time:</span>{" "}
+                    {recipe.prepTime ? `${recipe.prepTime} min` : "N/A"}
+                  </p>
                 </div>
-              )}
 
-              <p className="text-[#4e4640] text-sm mb-2">
-                <span className="font-medium">Likes:</span>{" "}
-                {recipe.likeCount || 0}
-              </p>
+                {recipe.categories && Array.isArray(recipe.categories) && (
+                  <div className="flex flex-wrap gap-1 mb-2">
+                    {recipe.categories.map((category, index) => (
+                      <span
+                        key={index}
+                        className="bg-[#e3d5ca] text-[#4e4640] px-2 py-0.5 rounded-full text-xs"
+                      >
+                        {category}
+                      </span>
+                    ))}
+                  </div>
+                )}
 
-              <div className="mb-2">
-                <h4 className="text-sm font-semibold text-[#4e4640]">
-                  Ingredients
-                </h4>
-                <p className="text-[#4e4640] text-xs whitespace-pre-line line-clamp-2">
-                  {recipe.ingredients || "No ingredients"}
+                <p className="text-[#4e4640] text-sm mb-2">
+                  <span className="font-medium">Likes:</span>{" "}
+                  {recipe.likeCount || 0}
                 </p>
-              </div>
 
-              <div className="mb-3">
-                <h4 className="text-sm font-semibold text-[#4e4640]">
-                  Instructions
-                </h4>
-                <p className="text-[#4e4640] text-xs whitespace-pre-line line-clamp-2">
-                  {recipe.instructions || "No instructions"}
-                </p>
-              </div>
+                <div className="mb-2">
+                  <h4 className="text-sm font-semibold text-[#4e4640]">
+                    Ingredients
+                  </h4>
+                  <p className="text-[#4e4640] text-xs whitespace-pre-line line-clamp-2">
+                    {recipe.ingredients || "No ingredients"}
+                  </p>
+                </div>
 
+                <div className="mb-3">
+                  <h4 className="text-sm font-semibold text-[#4e4640]">
+                    Instructions
+                  </h4>
+                  <p className="text-[#4e4640] text-xs whitespace-pre-line line-clamp-2">
+                    {recipe.instructions || "No instructions"}
+                  </p>
+                </div>
+              </div>
               <div className="flex gap-2 mt-auto">
                 <button
                   onClick={() => handleUpdateClick(recipe)}
