@@ -1,13 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import RecipeDetails from "./RecipeDetails";
+import { AuthContext } from "../Provider/AuthProvider";
 
 function MyRecipes() {
+  const { user } = use(AuthContext);
   const { id } = useParams();
   const [recipes, setRecipes] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  console.log(user);
+
+  function handleDelete(id) {
+    const url = `http://localhost:3000/my-recipe/${id}?uid=${user.uid}`;
+    const data = {
+      jsonId: id,
+      uid: user.uid,
+    };
+
+    fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Deleted:", data);
+        // Remove the deleted recipe from the list
+        setRecipes((prevRecipes) => prevRecipes.filter((r) => r._id !== id));
+      })
+      .catch((error) => console.error("Error:", error));
+  }
 
   useEffect(() => {
     const fetchRecipe = async () => {
