@@ -2,6 +2,7 @@ import React, { use, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 import Loading from "../Components/login_reginster/Loading";
+import { url } from "./Home";
 
 function Update() {
   const { user } = use(AuthContext);
@@ -15,9 +16,7 @@ function Update() {
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/recipe-details/${id}`
-        );
+        const response = await fetch(`${url}/recipe-details/${id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch recipe");
         }
@@ -54,7 +53,7 @@ function Update() {
       categories: formData.getAll("categories"),
     };
 
-    fetch(`http://localhost:3000/recipe-details/${user.uid}/${id}`, {
+    fetch(`${url}/recipe-details/${user.uid}/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -209,7 +208,7 @@ function Update() {
 
                 <div className="mb-4">
                   <button type="submit" className="w-full bg-[#e3d5ca] btn">
-                    Add Recipe
+                    Update Recipe
                   </button>
                 </div>
               </form>

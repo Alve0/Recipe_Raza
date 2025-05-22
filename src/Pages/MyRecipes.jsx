@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router";
 import RecipeDetails from "./RecipeDetails";
 import { AuthContext } from "../Provider/AuthProvider";
 import Update from "./Update";
+import { url } from "./Home";
+import Loading from "../Components/login_reginster/Loading";
 
 function MyRecipes() {
   const { user } = use(AuthContext);
@@ -14,13 +16,13 @@ function MyRecipes() {
   console.log(user);
 
   function handleDelete(id) {
-    const url = `http://localhost:3000/my-recipe/${id}?uid=${user.uid}`;
+    const Url = `${url}/my-recipe/${id}?uid=${user.uid}`;
     const data = {
       jsonId: id,
       uid: user.uid,
     };
 
-    fetch(url, {
+    fetch(Url, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +46,7 @@ function MyRecipes() {
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        const response = await fetch(` http://localhost:3000/my-recipe/${id}`);
+        const response = await fetch(`${url}/my-recipe/${id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch recipe");
         }
@@ -69,7 +71,7 @@ function MyRecipes() {
   if (loading) {
     return (
       <div className="bg-[#f5ebe0] min-h-screen flex items-center justify-center p-4">
-        <p className="text-[#4e4640] text-lg">Loading...</p>
+        <Loading />
       </div>
     );
   }

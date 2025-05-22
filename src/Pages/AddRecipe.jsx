@@ -1,5 +1,6 @@
 import React, { use } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
+import { url } from "./Home";
 
 const AddRecipe = () => {
   const { user } = use(AuthContext);
@@ -19,8 +20,8 @@ const AddRecipe = () => {
       likeCount: 0,
       uid: user.uid,
     };
-    const url = "http://localhost:3000/add-recipe";
-    fetch(url, {
+    const Url = `${url}/add-recipe`;
+    fetch(Url, {
       method: "POST",
       body: JSON.stringify(recipeData),
       headers: {
