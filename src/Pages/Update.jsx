@@ -1,5 +1,5 @@
 import React, { use, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 import Loading from "../Components/login_reginster/Loading";
 import { url } from "./Home";
@@ -12,7 +12,7 @@ function Update() {
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
@@ -68,18 +68,18 @@ function Update() {
       })
       .then((data) => {
         console.log("Success:", data);
+        navigate("/");
       })
       .catch((error) => {
         console.error("Error:", error);
       });
+
+    navigate("/");
   };
 
   return (
     <div>
       <div className="bg-[#f5ebe0] min-h-screen p-4">
-        <h2 className="text-3xl font-bold text-[#4e4640] mb-6 text-center">
-          Recipe Details
-        </h2>
         {loading ? (
           <Loading />
         ) : error ? (

@@ -85,7 +85,12 @@ function MyRecipes() {
   }
 
   if (!recipes.length) {
-    return <p>No recipes found</p>;
+    return (
+      <div className="h-screen flex items-center justify-center">
+        {" "}
+        <p>No recipes found</p>
+      </div>
+    );
   }
   function HendelClicked(id) {
     navigate(`/recipe-details/${id}`);

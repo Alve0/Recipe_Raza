@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router";
 import { BiSolidLike } from "react-icons/bi";
 import { CiBookmark } from "react-icons/ci";
 import Loading from "../Components/login_reginster/Loading";
 import { url } from "./Home";
-import { DiBackbone } from "react-icons/di";
+import { AuthContext } from "../Provider/AuthProvider";
 
 function RecipeDetails() {
   const { id } = useParams();
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { user } = useContext(AuthContext);
+  const userId = user?.uid || null;
+  const [hasLiked, setHasLiked] = useState(false);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -22,6 +25,7 @@ function RecipeDetails() {
         const data = await response.json();
         console.log(data);
         setRecipe(data);
+
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -36,8 +40,35 @@ function RecipeDetails() {
       setLoading(false);
     }
   }, [id]);
+  const handleLike = async (recipeId) => {
+    if (hasLiked) return;
 
-  console.log(recipe);
+    try {
+      const updatedLikeCount = recipe.likeCount + 1;
+      const response = await fetch(`${url}/recipe-details/${user.uid}/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ likeCount: updatedLikeCount }),
+      });
+
+      if (!response.ok) throw new Error("Failed to update like count");
+
+      setRecipe((prev) => ({
+        ...prev,
+        likeCount: updatedLikeCount,
+      }));
+      setHasLiked(true);
+    } catch (err) {
+      console.error("Error liking recipe:", err.message);
+    }
+  };
+
+  const handleBookmark = (recipeId) => {
+    console.log(`Bookmark recipe ${recipeId}`);
+    // Implement bookmark functionality here
+  };
 
   return (
     <div>
@@ -47,7 +78,6 @@ function RecipeDetails() {
         </h2>
         {loading ? (
           <div className="h-screen flex items-center justify-center">
-            {" "}
             <Loading />
           </div>
         ) : error ? (
@@ -60,19 +90,17 @@ function RecipeDetails() {
           </div>
         ) : (
           <div className="max-w-7xl mx-auto">
-            <div className="bg-[#d6c9b96e] p-4  rounded-lg shadow-md flex flex-col">
+            <div className="bg-[#d6c9b96e] p-4 rounded-lg shadow-md flex flex-col">
               {recipe.imageUrl && (
                 <img
                   src={recipe.imageUrl}
                   alt={recipe.title}
-                  className="w-full h-128  object-cover rounded-lg mb-3"
+                  className="w-full h-128 object-cover rounded-lg mb-3"
                 />
               )}
-
               <h3 className="text-lg font-bold text-[#4e4640] mb-2 line-clamp-2">
                 {recipe.title}
               </h3>
-
               <div className="flex justify-between text-[#4e4640] text-sm mb-2">
                 <p>
                   <span className="font-medium">Cuisine:</span>{" "}
@@ -83,7 +111,6 @@ function RecipeDetails() {
                   {recipe.prepTime ? `${recipe.prepTime} min` : "N/A"}
                 </p>
               </div>
-
               {recipe.categories && Array.isArray(recipe.categories) && (
                 <div className="flex flex-wrap gap-1 mb-2">
                   {recipe.categories.map((category, index) => (
@@ -96,9 +123,6 @@ function RecipeDetails() {
                   ))}
                 </div>
               )}
-
-              {/* have to make use the like and bookmark function work */}
-
               <div className="flex items-center justify-between text-[#4e4640] text-sm mb-2">
                 <p>
                   <span className="font-medium">Likes:</span>{" "}
@@ -107,8 +131,8 @@ function RecipeDetails() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleLike(recipe._id)}
-                    className="text-[#4e4640] hover:text-[#3a2f2b]"
-                    title="Like"
+                    className={`text-[#4e4640] hover:text-[#3a2f2b] `}
+                    disabled={!userId}
                   >
                     <BiSolidLike size={20} />
                   </button>
@@ -116,6 +140,7 @@ function RecipeDetails() {
                     onClick={() => handleBookmark(recipe._id)}
                     className="text-[#4e4640] hover:text-[#3a2f2b]"
                     title="Bookmark"
+                    disabled={!userId}
                   >
                     <CiBookmark size={20} />
                   </button>
@@ -130,7 +155,6 @@ function RecipeDetails() {
                   {recipe.ingredients || "No ingredients"}
                 </p>
               </div>
-
               <div className="mb-3">
                 <h4 className="text-sm font-semibold text-[#4e4640]">
                   Instructions
