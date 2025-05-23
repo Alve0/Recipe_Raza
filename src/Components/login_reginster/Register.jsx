@@ -5,7 +5,7 @@ import { Navigate, NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 const Register = () => {
-  const { createUser, profileUpdate } = use(AuthContext);
+  const { createUser, profileUpdate, googleLogin, user } = use(AuthContext);
   const navigate = useNavigate();
   const handleRegisterSubmit = async (event) => {
     event.preventDefault();
@@ -17,13 +17,12 @@ const Register = () => {
     try {
       await createUser(email, password);
       await profileUpdate(name, photo);
-      navigate("/");
     } catch (err) {
       console.log(err);
     }
     form.reset();
   };
-
+  user != null ? navigate("/") : "";
   return (
     <div className="bg-[#f5ebe0] min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md mx-auto bg-[#d6c9b96e] p-6 rounded-lg shadow-md">
@@ -93,7 +92,10 @@ const Register = () => {
             <div className="flex-grow h-px bg-[#4e4640]"></div>
           </div>
           <div className="mb-4">
-            <button className="w-full flex items-center gap-3 justify-center bg-[#e3d5ca] p-2 rounded font-medium text-[#4e4640] hover:bg-[#d6c9b9]">
+            <button
+              className="w-full flex items-center gap-3 justify-center bg-[#e3d5ca] p-2 rounded font-medium text-[#4e4640] hover:bg-[#d6c9b9]"
+              onClick={() => googleLogin()}
+            >
               <FaGoogle />
               Register with Google
             </button>

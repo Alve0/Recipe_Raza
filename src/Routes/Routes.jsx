@@ -9,6 +9,7 @@ import PrivateRoute from "../Provider/PrivateRoute";
 import MyRecipes from "../Pages/MyRecipes";
 import RecipeDetails from "../Pages/RecipeDetails";
 import Update from "../Pages/Update";
+import AllPage from "../Pages/AllPage";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: "/update/:id",
         Component: Update,
+      },
+      {
+        path: "/all-recipe",
+        Component: AllPage,
       },
     ],
   },

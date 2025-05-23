@@ -3,6 +3,8 @@ import { useParams } from "react-router";
 import { BiSolidLike } from "react-icons/bi";
 import { CiBookmark } from "react-icons/ci";
 import Loading from "../Components/login_reginster/Loading";
+import { url } from "./Home";
+import { DiBackbone } from "react-icons/di";
 
 function RecipeDetails() {
   const { id } = useParams();
@@ -44,7 +46,10 @@ function RecipeDetails() {
           Recipe Details
         </h2>
         {loading ? (
-          <Loading />
+          <div className="h-screen flex items-center justify-center">
+            {" "}
+            <Loading />
+          </div>
         ) : error ? (
           <div className="flex items-center justify-center min-h-[50vh]">
             <p className="text-[#4e4640] text-lg">{error}</p>

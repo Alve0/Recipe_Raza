@@ -19,6 +19,8 @@ const Login = () => {
     form.reset();
   };
 
+  // 💡Don’t implement email verification or the forget password method, as it will inconvenience the examiner. If you want, you can add these after receiving the assignment result.
+
   user != null ? navigate("/") : "";
   return (
     <div className="bg-[#f5ebe0] min-h-screen flex items-center justify-center p-4">
