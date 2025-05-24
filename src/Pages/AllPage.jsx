@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { url } from "./Home";
 import Loading from "../Components/login_reginster/Loading";
+import { Tooltip } from "react-tooltip";
 
 function AllPage() {
   const [recipes, setRecipes] = useState(null);
@@ -197,6 +198,9 @@ function AllPage() {
               )}
               <Link
                 to={`/recipe-details/${recipe._id}`}
+                data-tooltip-id="view_details"
+                data-tooltip-content="view_details"
+                data-tooltip-place="top"
                 className="mt-auto bg-[#4e4640] !text-[#f5ebe0] py-1.5 rounded font-medium text-sm text-center hover:bg-[#3a2f2b]"
               >
                 See Details
@@ -205,6 +209,7 @@ function AllPage() {
           ))}
         </div>
       )}
+      <Tooltip id="view_details" />
     </div>
   );
 }

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { url } from "./Home";
 import Loading from "../Components/login_reginster/Loading";
+import { Typewriter } from "react-simple-typewriter";
+import { Tooltip } from "react-tooltip";
 
 function Main() {
   const [topRecipes, setTopRecipes] = useState([]);
@@ -31,7 +33,7 @@ function Main() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 3000);
     return () => clearInterval(interval);
   }, [slides.length]);
 
@@ -71,8 +73,20 @@ function Main() {
             />
             <div className="absolute inset-0 bg-[#0000005e]  bg-opacity-50 flex flex-col items-center justify-center text-center">
               <h2 className="text-4xl font-bold !text-white mb-2">
-                {slide.title}
+                {slide.title.split(" ").slice(0, -1).join(" ")}{" "}
+                <span className="making-text-red">
+                  <Typewriter
+                    words={[slide.title.split(" ").slice(-1)[0]]}
+                    loop={false}
+                    cursor
+                    cursorStyle="_"
+                    typeSpeed={100}
+                    deleteSpeed={50}
+                    delaySpeed={1000}
+                  />
+                </span>
               </h2>
+
               <p className="text-xl !text-white">{slide.subtitle}</p>
             </div>
           </div>
@@ -138,6 +152,9 @@ function Main() {
                   {recipe.likeCount || 0}
                 </p>
                 <Link
+                  data-tooltip-id="view_details"
+                  data-tooltip-content="view_details"
+                  data-tooltip-place="top"
                   to={`/recipe-details/${recipe._id}`}
                   className="mt-auto bg-[#4e4640] !text-[#f5ebe0] py-1.5 rounded font-medium text-sm text-center hover:bg-[#3a2f2b]"
                 >
@@ -150,6 +167,9 @@ function Main() {
         <div className="text-center mt-8">
           <Link
             to="/all-recipe"
+            data-tooltip-id="view_details"
+            data-tooltip-content="Go to all recipe page"
+            data-tooltip-place="top"
             className="inline-block bg-[#4e4640] !text-[#f5ebe0] py-2 px-6 rounded font-medium text-base hover:bg-[#3a2f2b]"
           >
             See All Recipes
@@ -203,6 +223,7 @@ function Main() {
           </div>
         </div>
       </section>
+      <Tooltip id="view_details" />
     </div>
   );
 }

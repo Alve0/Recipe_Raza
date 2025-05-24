@@ -4,6 +4,7 @@ import { BiSolidLike } from "react-icons/bi";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import Loading from "../Components/login_reginster/Loading";
 import { url } from "./Home";
+import { Tooltip } from "react-tooltip";
 import { AuthContext } from "../Provider/AuthProvider";
 
 function RecipeDetails() {
@@ -152,6 +153,9 @@ function RecipeDetails() {
               </p>
               <div className="flex gap-2">
                 <button
+                  data-tooltip-id="view-recipe"
+                  data-tooltip-content="like"
+                  data-tooltip-place="top"
                   onClick={() => handleLike(recipe._id)}
                   className={`text-[#4e4640] hover:text-[#3a2f2b] ${
                     hasLiked ? "opacity-50 cursor-not-allowed" : ""
@@ -162,6 +166,9 @@ function RecipeDetails() {
                   <BiSolidLike size={20} />
                 </button>
                 <button
+                  data-tooltip-id="view-recipe"
+                  data-tooltip-content="bookmark"
+                  data-tooltip-place="top"
                   onClick={() => handleBookmark(recipe._id, userId)}
                   className="text-[#4e4640] hover:text-[#3a2f2b]"
                   title={isBookmarked ? "Remove Bookmark" : "Bookmark"}
@@ -194,6 +201,7 @@ function RecipeDetails() {
           </div>
         </div>
       )}
+      <Tooltip id="view-recipe" />
     </div>
   );
 }
