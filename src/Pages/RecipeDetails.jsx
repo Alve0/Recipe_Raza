@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, use } from "react";
 import { useParams } from "react-router";
 import { BiSolidLike } from "react-icons/bi";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
@@ -11,11 +11,10 @@ function RecipeDetails() {
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { user } = useContext(AuthContext);
+  const { user } = use(AuthContext);
   const userId = user?.uid || null;
   const [hasLiked, setHasLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
-
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
@@ -24,9 +23,10 @@ function RecipeDetails() {
         );
         if (!response.ok) throw new Error("Failed to fetch recipe");
         const data = await response.json();
+
         setRecipe(data);
         setIsBookmarked(data.isBookmarked || false);
-        setHasLiked(data.likeCount > 0 && userId ? true : false);
+        setHasLiked(data.hasLiked || false);
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -34,11 +34,18 @@ function RecipeDetails() {
       }
     };
 
-    if (id) fetchRecipe();
+    if (id && userId) fetchRecipe();
   }, [id, userId]);
 
   const handleLike = async (recipeId) => {
-    if (!userId || hasLiked) return;
+    if (!userId) {
+      alert("Please log in to like this recipe");
+      return;
+    }
+    if (hasLiked) {
+      alert("You have already liked this recipe");
+      return;
+    }
 
     try {
       const updatedLikeCount = (recipe.likeCount || 0) + 1;
@@ -50,7 +57,10 @@ function RecipeDetails() {
         body: JSON.stringify({ likeCount: updatedLikeCount }),
       });
 
-      if (!response.ok) throw new Error("Failed to update like count");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to update like count");
+      }
 
       setRecipe((prev) => ({
         ...prev,
@@ -59,9 +69,9 @@ function RecipeDetails() {
       setHasLiked(true);
     } catch (err) {
       console.error("Error liking recipe:", err.message);
+      alert(err.message);
     }
   };
-
   const handleBookmark = async (recipeId, uid) => {
     if (!uid) return;
 

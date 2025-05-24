@@ -11,6 +11,7 @@ import RecipeDetails from "../Pages/RecipeDetails";
 import Update from "../Pages/Update";
 import AllPage from "../Pages/AllPage";
 import Bookmark from "../Pages/Bookmark";
+import Main from "../Pages/main";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: "/bookmark",
         Component: Bookmark,
+      },
+      {
+        path: "/",
+        Component: Main,
       },
     ],
   },
