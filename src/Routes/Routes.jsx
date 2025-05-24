@@ -10,6 +10,7 @@ import MyRecipes from "../Pages/MyRecipes";
 import RecipeDetails from "../Pages/RecipeDetails";
 import Update from "../Pages/Update";
 import AllPage from "../Pages/AllPage";
+import Bookmark from "../Pages/Bookmark";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "/all-recipe",
         Component: AllPage,
+      },
+      {
+        path: "/bookmark",
+        Component: Bookmark,
       },
     ],
   },

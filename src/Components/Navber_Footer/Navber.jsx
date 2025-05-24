@@ -1,6 +1,6 @@
 import React, { use, useState } from "react";
 import { ImSpoonKnife } from "react-icons/im";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Provider/AuthProvider";
 function Navber() {
   const { user, signout } = use(AuthContext);
@@ -85,8 +85,9 @@ function Navber() {
                 <a className="justify-between">Profile</a>
               </li>
               <li>
-                <a>Settings</a>
+                <NavLink to={"/bookmark"}>Bookmark </NavLink>
               </li>
+
               <li>
                 <a onClick={() => signout()}>Logout</a>
               </li>
