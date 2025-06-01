@@ -2,6 +2,7 @@ import React, { use } from "react";
 import { Outlet } from "react-router";
 import Navber from "../Components/Navber_Footer/Navber";
 import Footer from "../Components/Navber_Footer/Footer";
+import { createNightowl } from "@bufferhead/nightowl";
 import { AuthContext } from "../Provider/AuthProvider";
 import Loading from "../Components/login_reginster/Loading";
 

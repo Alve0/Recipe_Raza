@@ -18,3 +18,15 @@ bg = f5ebe0 */
 .making-text-red {
   color: red;
 }
+#nightowl-switcher-default {
+  position: absolute !important;
+  background-color: transparent !important;
+  left: calc(100% - 270px) !important;
+  top: 8px !important;
+}
+@media screen and (max-width: 768px) {
+  #nightowl-switcher-default {
+    left: calc(100% - 170px) !important;
+    top: 10px !important;
+  }
+}

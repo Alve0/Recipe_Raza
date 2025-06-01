@@ -5,7 +5,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 function Navber() {
   const { user, signout } = use(AuthContext);
   return (
-    <div className="bg-[#a78c6c69] px-5">
+    <div className="bg-[#a78c6c69]  px-5">
       <div className="navbar  bg-transparent shadow-sm">
         <div className="navbar-start">
           <div className="dropdown">
@@ -66,6 +66,7 @@ function Navber() {
             </li>
           </ul>
         </div>
+
         {user ? (
           <div className="dropdown dropdown-end navbar-end ">
             <div
@@ -103,7 +104,7 @@ function Navber() {
             </NavLink>
             <NavLink
               to={"/register"}
-              className="btn bg-transparent border-2 border-[#7a6852]"
+              className="btn hidden lg:flex  bg-transparent border-2 border-[#7a6852]"
             >
               Register
             </NavLink>
