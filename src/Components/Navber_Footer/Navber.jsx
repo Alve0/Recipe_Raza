@@ -68,7 +68,15 @@ function Navber() {
             </li>
           </ul>
         </div>
-
+        <div
+          className="bg-transparent"
+          onClick={() => {
+            createNightowl({
+              defaultMode: "dark",
+              toggleButtonMode: "newState",
+            });
+          }}
+        ></div>
         {user ? (
           <div className="dropdown dropdown-end navbar-end ">
             <div
