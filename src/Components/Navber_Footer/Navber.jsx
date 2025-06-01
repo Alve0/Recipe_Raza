@@ -4,6 +4,8 @@ import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Provider/AuthProvider";
 function Navber() {
   const { user, signout } = use(AuthContext);
+  const photo = user?.photoURL;
+  console.log(user);
   return (
     <div className="bg-[#a78c6c69]  px-5">
       <div className="navbar  bg-transparent shadow-sm">
@@ -75,7 +77,7 @@ function Navber() {
               className=" cursor-grab hover:bg-transparent bg-transparent border-none avatar"
             >
               <div className="w-10  rounded-full">
-                <img alt="Tailwind CSS Navbar component" src={user.photoURL} />
+                <img alt="Tailwind CSS Navbar component" src={photo} />
               </div>
             </div>
             <ul
