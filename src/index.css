@@ -21,12 +21,12 @@ bg = f5ebe0 */
 #nightowl-switcher-default {
   position: absolute !important;
   background-color: transparent !important;
-  left: calc(100% - 270px) !important;
+  left: calc(100vw - 275px) !important;
   top: 8px !important;
 }
 @media screen and (max-width: 768px) {
   #nightowl-switcher-default {
-    left: calc(100% - 170px) !important;
+    left: calc(100vw - 175px) !important;
     top: 10px !important;
   }
 }

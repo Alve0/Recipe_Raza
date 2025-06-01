@@ -2,6 +2,7 @@ import React, { use, useState } from "react";
 import { ImSpoonKnife } from "react-icons/im";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { createNightowl } from "../../../nightowl";
 function Navber() {
   const { user, signout } = use(AuthContext);
   const photo = user?.photoURL;
@@ -30,7 +31,7 @@ function Navber() {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm bg-transparent dropdown-content  rounded-box z-1 mt-3 w-52 p-2 shadow"
+              className="menu bg-white/50  backdrop-blur-md menu-sm dropdown-content rounded-box z-10 mt-3 w-52 p-2 shadow "
             >
               <li>
                 <NavLink to={"/"}>Home</NavLink>
@@ -78,7 +79,7 @@ function Navber() {
           }}
         ></div>
         {user ? (
-          <div className="dropdown dropdown-end navbar-end ">
+          <div className="dropdown  dropdown-end navbar-end ">
             <div
               tabIndex={0}
               role="button"
@@ -90,7 +91,7 @@ function Navber() {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content  bg-transparent mt-36 rounded-box z-1  w-52 p-2 shadow"
+              className="menu menu-sm bg-white/50  backdrop-blur-md  dropdown-content  bg-transparent mt-36 rounded-box z-1  w-52 p-2 shadow"
             >
               <li>
                 <a className="justify-between">Profile</a>
